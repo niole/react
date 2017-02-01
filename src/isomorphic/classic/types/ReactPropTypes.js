@@ -350,11 +350,13 @@ function createUnionTypeChecker(arrayOfTypeCheckers) {
   function validate(props, propName, componentName, location, propFullName) {
     for (var i = 0; i < arrayOfTypeCheckers.length; i++) {
       var checker = arrayOfTypeCheckers[i];
+      var checked = checker(props, propName, componentName, location, propFullName);
       if (
-        checker(props, propName, componentName, location, propFullName) == null
+        checked == null
       ) {
         return null;
       }
+      return checked;
     }
 
     var locationName = ReactPropTypeLocationNames[location];
